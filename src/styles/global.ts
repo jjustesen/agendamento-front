@@ -8,10 +8,11 @@ const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    font-size: 62.5%;
+    /* font-size: 62.5%; */
   }
 
   html, body, #__next {
+    background: var(--chakra-colors-gray-200);
     height: 100%;
   }
 
