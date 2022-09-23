@@ -32,12 +32,12 @@ const AuthLogin = () => {
     handleLogin(formValues)
   }
   return (
-    <Flex justifyContent="center" alignItems="center" minH="100vh" bg="gray.100">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-        }}
-      >
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+      }}
+    >
+      <Flex justifyContent="center" alignItems="center" minH="100vh" bg="gray.100">
         <Grid maxW={480} w="100%" gap={4} p={8} bg="white" borderRadius={16} boxShadow="sm" m={6}>
           {/* <GridItem>
           <Text fontSize="xxx-large">Logo</Text>
@@ -71,8 +71,8 @@ const AuthLogin = () => {
             </Button>
           </GridItem>
         </Grid>
-      </form>
-    </Flex>
+      </Flex>
+    </form>
   )
 }
 
