@@ -7,11 +7,7 @@ const DashboardCalendar = () => {
 
   return (
     <Flex>
-      <Grid
-        w="100%"
-        templateColumns={{ base: '1fr', md: 'repeat(12, 1fr)' }}
-        gap={2}
-      >
+      <Grid w="100%" templateColumns={{ base: '1fr', md: 'repeat(12, 1fr)' }} gap={2}>
         <GridItem
           colSpan={{ base: 1, md: 2 }}
           py={{ base: 1, md: 6 }}
@@ -29,12 +25,7 @@ const DashboardCalendar = () => {
             08:00
           </Text>
         </GridItem>
-        <GridItem
-          colSpan={{ base: 1, md: 10 }}
-          p={4}
-          bg="whatsapp.500"
-          borderRadius={16}
-        >
+        <GridItem colSpan={{ base: 1, md: 10 }} p={4} bg="whatsapp.500" borderRadius={16}>
           <Box>
             <Text color="white" fontSize="lg" fontWeight="bold">
               Johannes
@@ -48,11 +39,7 @@ const DashboardCalendar = () => {
               borderRadius={8}
               mt={2}
             >
-              {active ? (
-                <FiChevronUp fontSize={20} color="white" />
-              ) : (
-                <FiChevronDown fontSize={20} color="white" />
-              )}
+              {active ? <FiChevronUp fontSize={20} color="white" /> : <FiChevronDown fontSize={20} color="white" />}
             </Flex>
           </Box>
           {active && (

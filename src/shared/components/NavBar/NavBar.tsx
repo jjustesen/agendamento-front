@@ -26,14 +26,7 @@ const RstNavBar = () => {
       <Grid h="min-content" w="100%">
         <GridItem fontSize={20}>Logo</GridItem>
         {routes.map((route, index) => (
-          <GridItem
-            key={index}
-            _hover={{ bg: 'green.200' }}
-            p={4}
-            m={2}
-            borderRadius={8}
-            cursor="pointer"
-          >
+          <GridItem key={index} _hover={{ bg: 'green.200' }} p={4} m={2} borderRadius={8} cursor="pointer">
             <Text> {route.name}</Text>
           </GridItem>
         ))}

@@ -7,12 +7,7 @@ const Dashboard = () => {
   return (
     <Flex>
       <RstNavBar />
-      <Grid
-        p={6}
-        w="100%"
-        templateColumns={{ base: '1fr', md: 'repeat(6, 1fr)' }}
-        gap={6}
-      >
+      <Grid p={6} w="100%" templateColumns={{ base: '1fr', md: 'repeat(6, 1fr)' }} gap={6}>
         <GridItem colSpan={4} p={6} bg="white" borderRadius={16}>
           <Text fontWeight="bold" color="gray.700" fontSize="lg" mb={4}>
             Horários do dia
