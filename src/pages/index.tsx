@@ -1,5 +1,2 @@
-import Main from 'shared/components/Main'
-
-export default function Home() {
-  return <Main />
-}
+import Login from 'pages/auth/login'
+export default Login

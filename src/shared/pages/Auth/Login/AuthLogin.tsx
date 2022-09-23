@@ -1,9 +1,9 @@
 import { Button, Flex, Grid, GridItem, Text } from '@chakra-ui/react'
-import axios from 'axios'
 import React, { useMemo, useState } from 'react'
 import RstInput from 'shared/components/Input'
+import { useAuth } from 'shared/providers/auth'
 
-interface iLogin {
+export interface iLogin {
   user: string
   password: string
 }
@@ -24,18 +24,12 @@ const AuthLogin = () => {
     }))
   }
 
+  const { handleLogin, auth } = useAuth()
+
+  console.log(auth)
+
   const handleSubmit = () => {
-    axios
-      .post('https://agendamentos2.herokuapp.com/auth', {
-        email: formValues.user,
-        password: formValues.password
-      })
-      .then(function (response) {
-        console.log(response)
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
+    handleLogin(formValues)
   }
   return (
     <Flex justifyContent="center" alignItems="center" minH="100vh" bg="gray.100">
