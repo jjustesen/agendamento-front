@@ -33,39 +33,45 @@ const AuthLogin = () => {
   }
   return (
     <Flex justifyContent="center" alignItems="center" minH="100vh" bg="gray.100">
-      <Grid maxW={480} w="100%" gap={4} p={8} bg="white" borderRadius={16} boxShadow="sm" m={6}>
-        {/* <GridItem>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+        }}
+      >
+        <Grid maxW={480} w="100%" gap={4} p={8} bg="white" borderRadius={16} boxShadow="sm" m={6}>
+          {/* <GridItem>
           <Text fontSize="xxx-large">Logo</Text>
         </GridItem> */}
 
-        <GridItem>
-          <Text fontSize="lg">Faça seu login</Text>
-        </GridItem>
+          <GridItem>
+            <Text fontSize="lg">Faça seu login</Text>
+          </GridItem>
 
-        <GridItem>
-          <RstInput
-            placeholder="Usuário"
-            onChange={({ target }) => handleChangeValue('user', target.value)}
-            value={formValues.user}
-          />
-        </GridItem>
+          <GridItem>
+            <RstInput
+              placeholder="Usuário"
+              onChange={({ target }) => handleChangeValue('user', target.value)}
+              value={formValues.user}
+            />
+          </GridItem>
 
-        <GridItem>
-          <RstInput
-            placeholder="Senha"
-            onChange={({ target }) => handleChangeValue('password', target.value)}
-            type="password"
-            value={formValues.password}
-          />
-        </GridItem>
+          <GridItem>
+            <RstInput
+              placeholder="Senha"
+              onChange={({ target }) => handleChangeValue('password', target.value)}
+              type="password"
+              value={formValues.password}
+            />
+          </GridItem>
 
-        <GridItem display="flex" justifyContent="space-between">
-          <Button colorScheme="gray">Register</Button>
-          <Button colorScheme="whatsapp" onClick={handleSubmit}>
-            Login
-          </Button>
-        </GridItem>
-      </Grid>
+          <GridItem display="flex" justifyContent="space-between">
+            <Button colorScheme="gray">Register</Button>
+            <Button colorScheme="whatsapp" type="submit" onClick={handleSubmit}>
+              Login
+            </Button>
+          </GridItem>
+        </Grid>
+      </form>
     </Flex>
   )
 }

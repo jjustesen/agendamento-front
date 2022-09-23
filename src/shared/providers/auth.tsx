@@ -1,6 +1,6 @@
 import { useToast } from '@chakra-ui/react'
 import Router from 'next/router'
-import React, { useContext, createContext, useState } from 'react'
+import React, { useContext, createContext, useState, useEffect } from 'react'
 import { iLogin } from 'shared/pages/Auth/Login/AuthLogin'
 import { useMutationControllerAuthLogin } from 'shared/service/Controllers'
 
@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => 
       { email: user.user, password: user.password },
       {
         onSuccess: (data) => {
+          localStorage.setItem('token', data.token)
           setAuth(data)
           Router.push('/dashboard')
         },
@@ -57,6 +58,14 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => 
       }
     )
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    if (token && !auth.token) {
+      setAuth({ token, company: {} as iCompany })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Auth.Provider
