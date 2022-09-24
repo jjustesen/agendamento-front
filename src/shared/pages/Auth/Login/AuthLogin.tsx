@@ -24,9 +24,7 @@ const AuthLogin = () => {
     }))
   }
 
-  const { handleLogin, auth } = useAuth()
-
-  console.log(auth)
+  const { handleLogin, isLoadingLogin } = useAuth()
 
   const handleSubmit = () => {
     handleLogin(formValues)
@@ -65,8 +63,10 @@ const AuthLogin = () => {
           </GridItem>
 
           <GridItem display="flex" justifyContent="space-between">
-            <Button colorScheme="gray">Register</Button>
-            <Button colorScheme="whatsapp" type="submit" onClick={handleSubmit}>
+            <Button colorScheme="gray" disabled={isLoadingLogin}>
+              Register
+            </Button>
+            <Button colorScheme="whatsapp" type="submit" onClick={handleSubmit} isLoading={isLoadingLogin}>
               Login
             </Button>
           </GridItem>

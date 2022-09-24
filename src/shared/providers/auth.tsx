@@ -23,6 +23,7 @@ export interface iAuthResponse {
 export interface iAuthContext {
   auth: iAuthResponse
   setAuth(item: unknown): void
+  isLoadingLogin: boolean
   handleLogin(user: iLogin): void
 }
 
@@ -35,7 +36,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => 
 
   const toast = useToast()
 
-  const { mutate: postAuth } = useMutationControllerAuthLogin()
+  const { mutate: postAuth, isLoading: isLoadingLogin } = useMutationControllerAuthLogin()
 
   const handleLogin = (user: iLogin) => {
     postAuth(
@@ -72,6 +73,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => 
       value={{
         auth,
         setAuth,
+        isLoadingLogin,
         handleLogin
       }}
     >
