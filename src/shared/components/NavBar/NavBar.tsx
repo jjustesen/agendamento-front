@@ -25,7 +25,7 @@ const routes = [
 const RstNavBar = () => {
   const { isMobile } = useMobileContext()
 
-  return isMobile ? <RstNavBarMobile routes={routes} /> : <RstNavBarDesktop routes={routes} />
+  return isMobile ? <RstNavBarMobile /> : <RstNavBarDesktop routes={routes} />
 }
 
 export default RstNavBar

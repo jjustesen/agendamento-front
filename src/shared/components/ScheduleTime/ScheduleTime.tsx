@@ -13,17 +13,14 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { FiRepeat, FiTrash, FiMoreVertical } from 'react-icons/fi'
+import { IHorariosControllerResponse } from 'shared/service/HorariosController'
 
 interface iProps {
-  id: string
-  start: string
-  end: string
-  title: string
-  client: string
+  item: IHorariosControllerResponse
   color: 'whatsapp' | 'gray' | 'instagram'
 }
 
-const RstScheduleTime = ({ start, end, title, client, color = 'gray' }: iProps) => {
+const RstScheduleTime = ({ item, color = 'gray' }: iProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleOpenAndClose = () => {
@@ -46,19 +43,19 @@ const RstScheduleTime = ({ start, end, title, client, color = 'gray' }: iProps) 
       <GridItem p={4} {...selectColor[color]} borderRadius={16} display="flex">
         <Box>
           <Text color="white" fontSize="3xl" mb={-2} fontWeight="medium">
-            {start}
+            {item.horario_atend}
           </Text>
           <Text color="white" fontSize="md" fontWeight="light">
-            {end}
+            {item.horario_atend}
           </Text>
         </Box>
         <Divider orientation="vertical" mx={4} />
         <Box>
           <Text color="white" fontSize="lg" fontWeight="medium">
-            {title}
+            {item.horario_atend}
           </Text>
           <Text color="white" fontSize="md" fontWeight="light">
-            {client}
+            {item.cliente?.nome}
           </Text>
         </Box>
         <Box ml="auto">

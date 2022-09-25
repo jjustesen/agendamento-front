@@ -1,44 +1,16 @@
 import { Avatar, Box, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react'
-import React, { useState, useEffect } from 'react'
-import { iRoutes } from 'shared/interface/routes'
+import React from 'react'
 import { FiMenu } from 'react-icons/fi'
+import { useAuth } from 'shared/providers/auth'
+import { useUserContext } from 'shared/providers/user'
+import { IFuncionariosControllerResponse, useQueryFuncionariosController } from 'shared/service/FuncionariosController'
 
-interface iProps {
-  routes: iRoutes[]
-}
-interface iUser {
-  name: string
-  avatar: string
-}
+const RstNavBarMobile = () => {
+  const { data: users = [] } = useQueryFuncionariosController()
 
-const RstNavBarMobile = ({ routes }: iProps) => {
-  // const { data } = useQueryCompaniesControllerShow({ id: '5909352b-6443-466d-8f64-a477043901e4' })
+  const { handleLogout } = useAuth()
 
-  const userLocal = localStorage.getItem('user')
-  console.log(routes)
-  const [user, setUser] = useState<iUser | null>(null)
-
-  const users = [
-    {
-      name: 'Murilo',
-      avatar: ''
-    },
-    {
-      name: 'Johannes',
-      avatar: ''
-    }
-  ]
-
-  const handleSelectUser = (user: iUser) => {
-    setUser(user)
-    localStorage.setItem('user', user.name)
-  }
-
-  useEffect(() => {
-    const currentUser = users.find((u) => u.name === userLocal) || users[0]
-    setUser(currentUser)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const { user, handleSetUser } = useUserContext()
 
   return (
     <>
@@ -55,13 +27,13 @@ const RstNavBarMobile = ({ routes }: iProps) => {
       >
         <Menu>
           <MenuButton>
-            <Avatar name={user?.name} size="md" src={user?.avatar} />
+            <Avatar name={user?.nome} size="md" />
           </MenuButton>
           <MenuList>
-            {users.map((user: iUser) => (
-              <MenuItem key={user.name} onClick={() => handleSelectUser(user)}>
-                <Avatar name={user.name} size="sm" src={user.avatar} mr={2} />
-                <Text>{user.name}</Text>
+            {users.map((user: IFuncionariosControllerResponse) => (
+              <MenuItem key={user.nome} onClick={() => handleSetUser(user)}>
+                <Avatar name={user.nome} size="sm" mr={2} />
+                <Text textTransform="capitalize">{user.nome}</Text>
               </MenuItem>
             ))}
           </MenuList>
@@ -76,7 +48,7 @@ const RstNavBarMobile = ({ routes }: iProps) => {
             <IconButton colorScheme="blue" size="lg" variant="ghost" aria-label="Menu" icon={<FiMenu />} />
           </MenuButton>
           <MenuList>
-            <MenuItem>Sair</MenuItem>
+            <MenuItem onClick={handleLogout}>Sair</MenuItem>
           </MenuList>
         </Menu>
       </Flex>

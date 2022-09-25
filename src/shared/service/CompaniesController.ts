@@ -15,7 +15,7 @@ interface ICompaniesControllerShowResponse {
 export const useQueryCompaniesControllerShow = ({ id }: { id: string }) =>
   useQuery<ICompaniesControllerShowResponse>(['companiesControllerShow'], () =>
     rstApi({
-      url: 'https://agendamentos2.herokuapp.com/companies/' + id + '/',
+      url: 'https://agendamentos2.herokuapp.com/empresas/' + id + '/',
       method: 'GET'
     })
   )

@@ -20,6 +20,7 @@ export interface iAuthContext {
   setAuth(item: unknown): void
   isLoadingLogin: boolean
   handleLogin(user: iLogin): void
+  handleLogout: () => void
 }
 
 export const Auth = createContext({} as iAuthContext)
@@ -38,7 +39,7 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => 
       { email: user.user, password: user.password },
       {
         onSuccess: (data) => {
-          localStorage.setItem('token', data.token)
+          localStorage.setItem('accessToken', data.token)
           setAuth(data)
           Router.push('/dashboard')
         },
@@ -55,6 +56,12 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => 
     )
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken')
+    setAuth({} as iAuthControllerCreateResponse)
+    Router.push('/auth/login')
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token && !auth.token) {
@@ -69,7 +76,8 @@ export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => 
         auth,
         setAuth,
         isLoadingLogin,
-        handleLogin
+        handleLogin,
+        handleLogout
       }}
     >
       {children}

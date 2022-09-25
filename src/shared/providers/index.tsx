@@ -4,8 +4,15 @@ import React from 'react'
 import GlobalStyles from 'styles/global'
 import { AuthProvider } from './auth'
 import { MobileProvider } from './isMobile'
+import { UserProvider } from './user'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false
+    }
+  }
+})
 
 const themeConfig = {
   colors: {
@@ -39,8 +46,10 @@ function Providers({ children }: React.PropsWithChildren<unknown>) {
       <QueryClientProvider client={queryClient}>
         <ChakraProvider theme={theme}>
           <AuthProvider>
-            <GlobalStyles />
-            {children}
+            <UserProvider>
+              <GlobalStyles />
+              {children}
+            </UserProvider>
           </AuthProvider>
         </ChakraProvider>
       </QueryClientProvider>

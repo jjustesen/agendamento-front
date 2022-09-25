@@ -1,31 +1,36 @@
-import { Collapse, Grid, GridItem, Text } from '@chakra-ui/react'
+import { Collapse, Grid, GridItem, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
+import RstAccordion from 'shared/components/Accordion'
+import { useUserContext } from 'shared/providers/user'
+import { useQueryHorariosControllerShow } from 'shared/service/HorariosController'
 import DashboardCalendar from './DashboardCalendar'
 import DashboardCalendarToday from './DashboardCalendarToday'
 
 const DashboardMobile = () => {
-  const [todayTab, setTodayTab] = React.useState(true)
-  const [calendarTab, setCalendarTab] = React.useState(false)
+  const { user } = useUserContext()
+
+  console.log({ user })
+
+  const { data = [] } = useQueryHorariosControllerShow({ id_func: user?.id })
+
+  console.log(data)
+
+  const { isOpen: isOpenToday, onToggle: onToggleToday } = useDisclosure()
+  const { isOpen: isOpenCalendar, onToggle: onToggleCalendar } = useDisclosure()
 
   return (
     <Grid p={3} gap={2} w="100%">
-      <GridItem p={6} bg="white" borderRadius={16} onClick={() => setTodayTab(!todayTab)}>
-        <Text fontWeight="bold" color="gray.700" fontSize="lg">
-          Próximos horários de hoje
-        </Text>
-      </GridItem>
-      <Collapse in={!!todayTab}>
+      <RstAccordion title="Próximos horários de hoje" onToggle={onToggleToday} isOpen={isOpenToday} />
+
+      <Collapse in={!!isOpenToday}>
         <GridItem p={1} bg="white" borderRadius={16} maxH="60vh" overflow="auto">
-          <DashboardCalendarToday />
+          <DashboardCalendarToday data={data} />
         </GridItem>
       </Collapse>
 
-      <GridItem p={6} bg="white" borderRadius={16} onClick={() => setCalendarTab(!calendarTab)}>
-        <Text fontWeight="bold" color="gray.700" fontSize="lg">
-          Todos os horários
-        </Text>
-      </GridItem>
-      <Collapse in={!!calendarTab}>
+      <RstAccordion title="Todos os horários" onToggle={onToggleCalendar} isOpen={isOpenCalendar} />
+
+      <Collapse in={!!isOpenCalendar}>
         <GridItem p={1} bg="white" borderRadius={16} maxH="60vh" overflow="auto">
           <DashboardCalendar />
         </GridItem>
