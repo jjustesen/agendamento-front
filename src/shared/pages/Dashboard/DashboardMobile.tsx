@@ -1,5 +1,5 @@
 import { Collapse, Grid, GridItem, useDisclosure } from '@chakra-ui/react'
-import React from 'react'
+import React, { useEffect } from 'react'
 import RstAccordion from 'shared/components/Accordion'
 import DashboardCalendar from './DashboardCalendar'
 import DashboardCalendarToday from './DashboardCalendarToday'
@@ -7,6 +7,11 @@ import DashboardCalendarToday from './DashboardCalendarToday'
 const DashboardMobile = () => {
   const { isOpen: isOpenToday, onToggle: onToggleToday } = useDisclosure()
   const { isOpen: isOpenCalendar, onToggle: onToggleCalendar } = useDisclosure()
+
+  useEffect(() => {
+    onToggleToday()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <Grid p={3} gap={2} w="100%">
