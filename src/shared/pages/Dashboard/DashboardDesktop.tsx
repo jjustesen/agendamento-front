@@ -1,7 +1,7 @@
 import { Grid, GridItem, Text } from '@chakra-ui/react'
 import React from 'react'
 import DashboardCalendar from './DashboardCalendar'
-import DashboardCalendarToday from './DashboardCalendarToday'
+// import DashboardCalendarToday from './DashboardCalendarToday'
 
 const DashboardDesktop = () => {
   return (
@@ -17,7 +17,7 @@ const DashboardDesktop = () => {
         <Text pl={3} fontWeight="bold" color="gray.700" fontSize="lg" mb={4}>
           Próximos horários de hoje
         </Text>
-        <DashboardCalendarToday />
+        {/* <DashboardCalendarToday /> */}
       </GridItem>
 
       <GridItem colSpan={2} p={6} bg="white" borderRadius={16}>
