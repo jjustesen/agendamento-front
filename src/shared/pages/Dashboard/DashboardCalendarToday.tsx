@@ -1,7 +1,7 @@
-import { Flex, Grid, Input } from '@chakra-ui/react'
+import { Grid } from '@chakra-ui/react'
 import React from 'react'
 import RstScheduleTime from 'shared/components/ScheduleTime'
-import moment from 'moment'
+
 const times = [
   {
     id: 'asd',
@@ -110,21 +110,16 @@ const times = [
   }
 ]
 
-const DashboardCalendar = () => {
-  const [selectDate, setSelectDate] = React.useState(moment().format('YYYY-MM-DD'))
+const DashboardCalendarToday = () => {
   return (
     <>
-      <Flex mb={4} p={3}>
-        <Input type="date" value={selectDate} onChange={({ target }) => setSelectDate(target.value)} />
-      </Flex>
-
       <Grid gap={4} overflow="auto" p={3}>
         {times.map((time) => (
-          <RstScheduleTime key={time.id} color="gray" {...time} />
+          <RstScheduleTime key={time.id} {...time} color="whatsapp" />
         ))}
       </Grid>
     </>
   )
 }
 
-export default DashboardCalendar
+export default DashboardCalendarToday

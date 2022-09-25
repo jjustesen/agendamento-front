@@ -2,7 +2,7 @@ import { useToast } from '@chakra-ui/react'
 import Router from 'next/router'
 import React, { useContext, createContext, useState, useEffect } from 'react'
 import { iLogin } from 'shared/pages/Auth/Login/AuthLogin'
-import { useMutationControllerAuthLogin } from 'shared/service/Controllers'
+import { iAuthControllerCreateResponse, useMutationAuthControllerCreate } from 'shared/service/AuthController'
 
 export interface iCompany {
   created_at: string
@@ -15,13 +15,8 @@ export interface iCompany {
   updated_at: string
 }
 
-export interface iAuthResponse {
-  token: string
-  company: iCompany
-}
-
 export interface iAuthContext {
-  auth: iAuthResponse
+  auth: iAuthControllerCreateResponse
   setAuth(item: unknown): void
   isLoadingLogin: boolean
   handleLogin(user: iLogin): void
@@ -32,11 +27,11 @@ export const Auth = createContext({} as iAuthContext)
 export const useAuth = () => useContext(Auth)
 
 export const AuthProvider = ({ children }: React.PropsWithChildren<unknown>) => {
-  const [auth, setAuth] = useState<iAuthResponse>({} as iAuthResponse)
+  const [auth, setAuth] = useState<iAuthControllerCreateResponse>({} as iAuthControllerCreateResponse)
 
   const toast = useToast()
 
-  const { mutate: postAuth, isLoading: isLoadingLogin } = useMutationControllerAuthLogin()
+  const { mutate: postAuth, isLoading: isLoadingLogin } = useMutationAuthControllerCreate()
 
   const handleLogin = (user: iLogin) => {
     postAuth(

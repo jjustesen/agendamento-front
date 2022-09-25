@@ -19,7 +19,8 @@ const colors = {
 }
 
 const shadows = {
-  green: ' 0 0 10px 0px #22c35e'
+  green: ' 0 0 10px 0px #22c35e',
+  gray: ' 0 0 10px 0px #718096'
 }
 
 export const theme = extendTheme({ colors, config, shadows })

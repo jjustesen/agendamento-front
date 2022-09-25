@@ -20,9 +20,10 @@ interface iProps {
   end: string
   title: string
   client: string
+  color: 'whatsapp' | 'gray' | 'instagram'
 }
 
-const RstScheduleTime = ({ start, end, title, client }: iProps) => {
+const RstScheduleTime = ({ start, end, title, client, color = 'gray' }: iProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const handleOpenAndClose = () => {
@@ -33,9 +34,16 @@ const RstScheduleTime = ({ start, end, title, client }: iProps) => {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const selectColor: any = {
+    whatsapp: { bg: 'whatsapp.500', boxShadow: 'green' },
+    instagram: { bg: 'instagram.500', boxShadow: 'green' },
+    gray: { bg: 'gray.500', boxShadow: 'gray' }
+  }
+
   return (
     <Grid w="100%" gap={2} onClick={handleOpenAndClose}>
-      <GridItem p={4} bg="whatsapp.500" boxShadow={'green'} borderRadius={16} display="flex">
+      <GridItem p={4} {...selectColor[color]} borderRadius={16} display="flex">
         <Box>
           <Text color="white" fontSize="3xl" mb={-2} fontWeight="medium">
             {start}

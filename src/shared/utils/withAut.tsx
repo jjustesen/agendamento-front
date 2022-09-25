@@ -11,7 +11,7 @@ export const withAuth = (WrappedComponent: ElementType) => {
       const token = auth.token
       console.log({ token })
       if (!token) {
-        router.push('/')
+        // router.push('/')
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
