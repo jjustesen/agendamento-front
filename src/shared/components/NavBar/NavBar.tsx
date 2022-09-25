@@ -1,5 +1,5 @@
-import { useMediaQuery } from '@chakra-ui/react'
 import React from 'react'
+import { useMobileContext } from 'shared/providers/isMobile'
 import RstNavBarDesktop from './NavBarDesktop'
 import RstNavBarMobile from './NavBarMobile'
 
@@ -23,7 +23,7 @@ const routes = [
 ]
 
 const RstNavBar = () => {
-  const [isMobile] = useMediaQuery('(max-width: 767px)')
+  const { isMobile } = useMobileContext()
 
   return isMobile ? <RstNavBarMobile routes={routes} /> : <RstNavBarDesktop routes={routes} />
 }
