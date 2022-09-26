@@ -1,13 +1,17 @@
 import { Grid, Skeleton } from '@chakra-ui/react'
+import moment from 'moment'
 import React from 'react'
-import RstScheduleTime from 'shared/components/ScheduleTime'
+import RstMeetCard from 'shared/components/MeetCard/MeetCard'
 import { useUserContext } from 'shared/providers/user'
-import { useQueryHorariosControllerShow } from 'shared/service/HorariosController'
+import { useQueryMeetsControllerShow } from 'shared/service/MeetsController'
 
 const DashboardCalendarToday = () => {
   const { user } = useUserContext()
 
-  const { data = [], isLoading } = useQueryHorariosControllerShow({ id_func: user?.id })
+  const { data = [], isLoading } = useQueryMeetsControllerShow({
+    employe: user?.id,
+    date: moment().format('YYYY-MM-DD')
+  })
 
   if (isLoading) {
     return (
@@ -23,7 +27,7 @@ const DashboardCalendarToday = () => {
     <>
       <Grid gap={4} overflow="auto" p={3}>
         {data?.length ? (
-          data.map((item) => <RstScheduleTime key={item.id} item={item} color={item.cliente ? 'whatsapp' : 'gray'} />)
+          data.map((item) => <RstMeetCard key={item.id} item={item} color={item.client ? 'whatsapp' : 'gray'} />)
         ) : (
           <p>Nenhum horário para hoje</p>
         )}

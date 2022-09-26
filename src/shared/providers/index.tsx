@@ -1,5 +1,7 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
 import React from 'react'
 import GlobalStyles from 'styles/global'
 import { AuthProvider } from './auth'
@@ -47,6 +49,7 @@ function Providers({ children }: React.PropsWithChildren<unknown>) {
         <ChakraProvider theme={theme}>
           <AuthProvider>
             <UserProvider>
+              <ReactQueryDevtools initialIsOpen={false} />
               <GlobalStyles />
               {children}
             </UserProvider>

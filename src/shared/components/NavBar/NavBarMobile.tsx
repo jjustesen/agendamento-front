@@ -3,10 +3,10 @@ import React from 'react'
 import { FiMenu } from 'react-icons/fi'
 import { useAuth } from 'shared/providers/auth'
 import { useUserContext } from 'shared/providers/user'
-import { IFuncionariosControllerResponse, useQueryFuncionariosController } from 'shared/service/FuncionariosController'
+import { iEmployesControllerResponse, useQueryEmployesController } from 'shared/service/EmployesController'
 
 const RstNavBarMobile = () => {
-  const { data: users = [] } = useQueryFuncionariosController()
+  const { data: users = [] } = useQueryEmployesController()
 
   const { handleLogout } = useAuth()
 
@@ -27,13 +27,13 @@ const RstNavBarMobile = () => {
       >
         <Menu>
           <MenuButton>
-            <Avatar name={user?.nome} size="md" />
+            <Avatar name={user?.name} size="md" />
           </MenuButton>
           <MenuList>
-            {users.map((user: IFuncionariosControllerResponse) => (
-              <MenuItem key={user.nome} onClick={() => handleSetUser(user)}>
-                <Avatar name={user.nome} size="sm" mr={2} />
-                <Text textTransform="capitalize">{user.nome}</Text>
+            {users.map((user: iEmployesControllerResponse) => (
+              <MenuItem key={user.name} onClick={() => handleSetUser(user)}>
+                <Avatar name={user.name} size="sm" mr={2} />
+                <Text textTransform="capitalize">{user.name}</Text>
               </MenuItem>
             ))}
           </MenuList>

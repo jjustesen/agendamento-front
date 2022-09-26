@@ -1,21 +1,13 @@
 import { rstApi } from './api'
 import { useQuery } from '@tanstack/react-query'
+import { iEmploye } from 'shared/interface/public'
 
-interface ICompaniesControllerShowResponse {
-  id: string
-  nome: string
-  nome_empresa: string
-  email: string
-  password: string
-  document: string
-  updated_at: string
-  created_at: string
-}
+type ICompaniesControllerShowResponse = iEmploye
 
-export const useQueryCompaniesControllerShow = ({ id }: { id: string }) =>
+export const useQueryCompaniesControllerShow = ({ company_id }: { company_id: string }) =>
   useQuery<ICompaniesControllerShowResponse>(['companiesControllerShow'], () =>
     rstApi({
-      url: 'https://agendamentos2.herokuapp.com/empresas/' + id + '/',
+      url: 'https://agendamentos2.herokuapp.com/companies/' + company_id + '/',
       method: 'GET'
     })
   )
