@@ -1,13 +1,24 @@
-import { Input, InputProps } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, InputProps } from '@chakra-ui/react'
 import React from 'react'
 
-type iProps = InputProps
+interface iProps extends InputProps {
+  label?: string
+  helperText?: string
+  errorMessage?: string
+  isError?: boolean
+}
 
-const RstInput = ({ ...props }: iProps) => {
+const RstInput = ({ label, helperText, errorMessage, isError, ...props }: iProps) => {
   return (
-    <div>
-      <Input colorScheme="whatsapp" {...props} />
-    </div>
+    <FormControl isInvalid={isError}>
+      <FormLabel>{label}</FormLabel>
+      <Input {...props} />
+      {!isError ? (
+        <FormHelperText fontSize="xs">{helperText}</FormHelperText>
+      ) : (
+        <FormErrorMessage fontSize="xs">{errorMessage}</FormErrorMessage>
+      )}
+    </FormControl>
   )
 }
 

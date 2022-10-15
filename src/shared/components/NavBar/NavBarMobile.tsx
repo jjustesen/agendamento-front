@@ -1,16 +1,25 @@
 import { Avatar, Box, Flex, IconButton, Menu, MenuButton, MenuItem, MenuList, Text } from '@chakra-ui/react'
+import Router from 'next/router'
 import React from 'react'
 import { FiMenu } from 'react-icons/fi'
 import { useAuth } from 'shared/providers/auth'
 import { useUserContext } from 'shared/providers/user'
 import { iEmployesControllerResponse, useQueryEmployesController } from 'shared/service/EmployesController'
+import { iRoutes } from './NavBar'
 
-const RstNavBarMobile = () => {
+interface iProps {
+  routes: iRoutes[]
+}
+const RstNavBarMobile = ({ routes }: iProps) => {
   const { data: users = [] } = useQueryEmployesController()
 
   const { handleLogout } = useAuth()
 
   const { user, handleSetUser } = useUserContext()
+
+  const handleRedirect = (path: string) => {
+    Router.push(path)
+  }
 
   return (
     <>
@@ -48,6 +57,11 @@ const RstNavBarMobile = () => {
             <IconButton colorScheme="blue" size="lg" variant="ghost" aria-label="Menu" icon={<FiMenu />} />
           </MenuButton>
           <MenuList>
+            {routes.map((route) => (
+              <MenuItem key={route.path} onClick={() => handleRedirect(route.path)}>
+                {route.name}
+              </MenuItem>
+            ))}
             <MenuItem onClick={handleLogout}>Sair</MenuItem>
           </MenuList>
         </Menu>

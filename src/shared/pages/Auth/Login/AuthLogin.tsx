@@ -17,6 +17,8 @@ const AuthLogin = () => {
   }, [])
   const [formValues, setFormValues] = useState<iLogin>(initialValues)
 
+  const { handleLogin, isLoadingLogin } = useAuth()
+
   const handleChangeValue = (fname: keyof iLogin, value: unknown) => {
     setFormValues((oldValues) => ({
       ...oldValues,
@@ -24,11 +26,10 @@ const AuthLogin = () => {
     }))
   }
 
-  const { handleLogin, isLoadingLogin } = useAuth()
-
   const handleSubmit = () => {
     handleLogin(formValues)
   }
+
   return (
     <form
       onSubmit={(e) => {

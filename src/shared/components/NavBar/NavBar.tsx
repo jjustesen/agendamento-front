@@ -2,30 +2,25 @@ import React from 'react'
 import { useMobileContext } from 'shared/providers/isMobile'
 import RstNavBarDesktop from './NavBarDesktop'
 import RstNavBarMobile from './NavBarMobile'
-
-const routes = [
+export interface iRoutes {
+  name: string
+  path: string
+}
+const routes: iRoutes[] = [
   {
     name: 'Dashboard',
     path: '/dashboard'
   },
   {
     name: 'Perfil',
-    path: '/profile'
-  },
-  {
-    name: 'Perfil',
-    path: '/profile'
-  },
-  {
-    name: 'Perfil',
-    path: '/profile'
+    path: '/config/user'
   }
 ]
 
 const RstNavBar = () => {
   const { isMobile } = useMobileContext()
 
-  return isMobile ? <RstNavBarMobile /> : <RstNavBarDesktop routes={routes} />
+  return isMobile ? <RstNavBarMobile routes={routes} /> : <RstNavBarDesktop routes={routes} />
 }
 
 export default RstNavBar
