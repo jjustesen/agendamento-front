@@ -1,8 +1,9 @@
 import React, { useContext, createContext, useState, useEffect } from 'react'
 import { iEmployesControllerResponse, useQueryEmployesController } from 'shared/service/EmployesController'
+import { useAuth } from './auth'
 
 interface iUser {
-  user: iEmployesControllerResponse | undefined
+  user: iEmployesControllerResponse
   handleSetUser: (user: iEmployesControllerResponse) => void
 }
 
@@ -11,9 +12,11 @@ export const UserContext = createContext({} as iUser)
 export const useUserContext = () => useContext(UserContext)
 
 export const UserProvider = ({ children }: React.PropsWithChildren<unknown>) => {
-  const { data: users = [] } = useQueryEmployesController()
+  const { auth } = useAuth()
 
-  const [user, setUser] = useState<iEmployesControllerResponse | undefined>({} as iEmployesControllerResponse)
+  const { data: users = [] } = useQueryEmployesController({ enabled: !!auth?.company?.id })
+
+  const [user, setUser] = useState<iEmployesControllerResponse>({} as iEmployesControllerResponse)
 
   const handleSetUser = (user: iEmployesControllerResponse) => {
     setUser(user)
@@ -23,7 +26,7 @@ export const UserProvider = ({ children }: React.PropsWithChildren<unknown>) => 
   useEffect(() => {
     const userLocal = localStorage.getItem('user')
     if (userLocal) {
-      const currentUser = users.find((u) => u.name === userLocal) || users[0]
+      const currentUser = users?.find((u) => u.name === userLocal) || users[0]
       setUser(currentUser)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -32,14 +32,14 @@ const RstNavBarMobile = ({ routes }: iProps) => {
         alignItems="center"
         px={4}
         py={2}
-        zIndex={9999}
+        zIndex={9}
       >
         <Menu>
           <MenuButton>
             <Avatar name={user?.name} size="md" />
           </MenuButton>
           <MenuList>
-            {users.map((user: iEmployesControllerResponse) => (
+            {users?.map((user: iEmployesControllerResponse) => (
               <MenuItem key={user.name} onClick={() => handleSetUser(user)}>
                 <Avatar name={user.name} size="sm" mr={2} />
                 <Text textTransform="capitalize">{user.name}</Text>

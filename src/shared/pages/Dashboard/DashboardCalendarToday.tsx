@@ -26,11 +26,7 @@ const DashboardCalendarToday = () => {
   return (
     <>
       <Grid gap={4} overflow="auto" p={3}>
-        {data?.length ? (
-          data.map((item) => <RstMeetCard key={item.id} item={item} color={item.client ? 'whatsapp' : 'gray'} />)
-        ) : (
-          <p>Nenhum horário para hoje</p>
-        )}
+        {data?.length ? data.map((item) => <RstMeetCard key={item.id} item={item} />) : <p>Nenhum horário para hoje</p>}
       </Grid>
     </>
   )

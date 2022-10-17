@@ -14,18 +14,25 @@ import {
 } from '@chakra-ui/react'
 import moment from 'moment'
 import React from 'react'
-import { FiTrash, FiMoreVertical } from 'react-icons/fi'
-import { iMeetsControllerResponse, useMutationMeetsControllerCancel } from 'shared/service/MeetsController'
+import { FiTrash, FiMoreVertical, FiCalendar, FiSlash } from 'react-icons/fi'
+import { iMeet } from 'shared/interface/public'
+import {
+  iMeetsControllerResponse,
+  useMutationMeetsControllerCancel,
+  useMutationMeetsControllerInterval
+} from 'shared/service/MeetsController'
+import MeetCardSchedule from './MeetCardSchedule'
 
 interface iProps {
   item: iMeetsControllerResponse
-  color: 'whatsapp' | 'gray' | 'instagram'
 }
 
-const RstMeetCard = ({ item, color = 'gray' }: iProps) => {
+const RstMeetCard = ({ item }: iProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen: isOpenSchedule, onOpen: onOpenSchedule, onClose: onCloseSchedule } = useDisclosure()
 
-  const { mutate: cancelTime } = useMutationMeetsControllerCancel({ employe_id: item.id })
+  const { mutate: cancelTime } = useMutationMeetsControllerCancel({ meet_id: item.id })
+  const { mutate: patchInterval } = useMutationMeetsControllerInterval({ meet_id: item.id })
 
   const toast = useToast()
 
@@ -57,16 +64,46 @@ const RstMeetCard = ({ item, color = 'gray' }: iProps) => {
     })
   }
 
+  const handleIntervalTime = () => {
+    patchInterval(undefined, {
+      onSuccess: () => {
+        toast({
+          title: 'Intervalo agendado',
+          description: 'Este horário foi agendado como intervalo'
+        })
+        onClose()
+      },
+      onError: () => {
+        toast({
+          title: 'Erro ao agendar intervalo',
+          description: 'Ocorreu um erro ao agendar este horário como intervalo',
+          status: 'error'
+        })
+      }
+    })
+  }
+
+  const selectColor = (meet: iMeet) => {
+    if (meet.title === 'Intervalo') {
+      return 'break'
+    } else if (meet.client_id) {
+      return 'whatsapp'
+    } else {
+      return 'gray'
+    }
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const selectColor: any = {
+  const colors: any = {
     whatsapp: { bg: 'whatsapp.500', boxShadow: 'green' },
     instagram: { bg: 'instagram.500', boxShadow: 'green' },
-    gray: { bg: 'gray.500', boxShadow: 'gray' }
+    gray: { bg: 'gray.500', boxShadow: 'gray' },
+    break: { bg: 'yellow.500', boxShadow: 'gray' }
   }
 
   return (
     <Grid w="100%" gap={2} onClick={handleOpenAndClose}>
-      <GridItem p={4} {...selectColor[color]} borderRadius={16} display="flex">
+      <GridItem p={4} {...colors[selectColor(item)]} borderRadius={16} display="flex">
         <Box>
           <Text color="white" fontSize="3xl" mb={-1} fontWeight="medium">
             {moment(item.start_meet).format('HH:mm')}
@@ -88,7 +125,28 @@ const RstMeetCard = ({ item, color = 'gray' }: iProps) => {
           <Menu>
             <MenuButton as={IconButton} icon={<FiMoreVertical />} colorScheme="blackAlpha" variant="ghost" h="100%" />
             <MenuList>
-              <MenuItem icon={<FiTrash />} onClick={handleCancelTime} disabled={!item.client_id}>
+              <MenuItem
+                icon={<FiCalendar />}
+                onClick={onOpenSchedule}
+                disabled={!item.client_id}
+                isDisabled={!!item.client_id}
+              >
+                Agendar
+              </MenuItem>
+              <MenuItem
+                icon={<FiSlash />}
+                onClick={handleIntervalTime}
+                disabled={!item.client_id}
+                isDisabled={!!item.client_id}
+              >
+                Marcar como intervalo
+              </MenuItem>
+              <MenuItem
+                icon={<FiTrash />}
+                onClick={handleCancelTime}
+                disabled={!item.client_id}
+                isDisabled={!item.client_id}
+              >
                 Cancelar
               </MenuItem>
               {/* <MenuItem icon={<FiRepeat />}>Remarcar</MenuItem> */}
@@ -96,6 +154,7 @@ const RstMeetCard = ({ item, color = 'gray' }: iProps) => {
           </Menu>
         </Box>
       </GridItem>
+      <MeetCardSchedule isOpen={isOpenSchedule} onClose={onCloseSchedule} item={item} />
     </Grid>
   )
 }
