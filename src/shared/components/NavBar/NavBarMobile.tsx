@@ -36,7 +36,7 @@ const RstNavBarMobile = ({ routes }: iProps) => {
       >
         <Menu>
           <MenuButton>
-            <Avatar name={user?.name} size="md" />
+            <Avatar name={user?.name} size="sm" />
           </MenuButton>
           <MenuList>
             {users?.map((user: iEmployesControllerResponse) => (

@@ -71,7 +71,7 @@ export const ConfigUser = () => {
   return (
     <Flex flexDir={{ base: 'column', md: 'row' }}>
       <RstNavBar />
-      <Flex p={1} m={3} bg="white" borderRadius={16} flexDir="column">
+      <Flex p={1} m={3} bg="white" borderRadius={16} flexDir="column" flex={1}>
         <Text p={5} fontWeight="bold" color="gray.700" fontSize="lg">
           Configurações do usuário
         </Text>
