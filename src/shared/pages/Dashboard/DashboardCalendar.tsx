@@ -14,15 +14,18 @@ const DashboardCalendar = () => {
   const {
     data = [],
     isLoading,
+    isRefetching,
     refetch
   } = useQueryMeetsControllerShow({
     employe: user?.id,
     date: selectDate
   })
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return (
       <Grid gap={4} overflow="auto" p={3}>
+        <Skeleton h={93} borderRadius={16} />
+        <Skeleton h={93} borderRadius={16} />
         <Skeleton h={93} borderRadius={16} />
         <Skeleton h={93} borderRadius={16} />
         <Skeleton h={93} borderRadius={16} />
