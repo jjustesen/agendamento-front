@@ -1,10 +1,10 @@
 import { Button, Divider, Flex, Grid, GridItem, Text, useToast } from '@chakra-ui/react'
 import moment from 'moment'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RstInput from 'shared/components/Input'
 import RstNavBar from 'shared/components/NavBar'
 import { useUserContext } from 'shared/providers/user'
-import { useMutationEmployesControllerUpdate, useQueryEmployesControllerShow } from 'shared/service/EmployesController'
+import { useMutationEmployesControllerUpdate } from 'shared/service/EmployesController'
 
 interface iForm {
   name: string
@@ -17,26 +17,20 @@ interface iForm {
 export const ConfigUser = () => {
   const { user } = useUserContext()
 
-  console.log(user)
+  const { mutate: editTime } = useMutationEmployesControllerUpdate({ employe_id: user?.id })
 
-  const { data } = useQueryEmployesControllerShow({ employe_id: user?.id })
+  const [formValues, setFormValues] = useState({} as iForm)
+  const toast = useToast()
 
-  console.log(data)
-
-  const initialValues: iForm = useMemo(() => {
-    return {
+  useEffect(() => {
+    setFormValues({
       name: user?.name,
       email: user?.email,
       start_time: moment(user?.start_time).format('HH:mm'),
       end_time: moment(user?.end_time).format('HH:mm'),
       time_per_work: user?.time_per_work
-    }
+    })
   }, [user])
-
-  const { mutate: editTime } = useMutationEmployesControllerUpdate({ employe_id: user?.id })
-
-  const [formValues, setFormValues] = useState<iForm>(initialValues)
-  const toast = useToast()
 
   const handleChangeValue = (fname: keyof iForm, value: unknown) => {
     setFormValues((oldValues) => ({

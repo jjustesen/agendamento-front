@@ -9,7 +9,13 @@ const DashboardCalendar = () => {
   const [selectDate, setSelectDate] = React.useState(moment().format('YYYY-MM-DD'))
   const { user } = useUserContext()
 
-  const { data = [], isLoading } = useQueryMeetsControllerShow({
+  console.log(user)
+
+  const {
+    data = [],
+    isLoading,
+    refetch
+  } = useQueryMeetsControllerShow({
     employe: user?.id,
     date: selectDate
   })
@@ -30,7 +36,11 @@ const DashboardCalendar = () => {
         <Input type="date" value={selectDate} onChange={({ target }) => setSelectDate(target.value)} />
       </Flex>
       <Grid gap={4} overflow="auto" p={3}>
-        {data?.length ? data.map((item) => <RstMeetCard key={item.id} item={item} />) : <p>Nenhum horário para hoje</p>}
+        {data?.length ? (
+          data.map((item) => <RstMeetCard key={item.id} item={item} refetch={refetch} />)
+        ) : (
+          <p>Nenhum horário para hoje</p>
+        )}
       </Grid>
     </>
   )

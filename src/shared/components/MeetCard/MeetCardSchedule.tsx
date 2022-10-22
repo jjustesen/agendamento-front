@@ -18,6 +18,7 @@ interface iProps {
   isOpen: boolean
   onClose: () => void
   item: iMeet
+  onSubmit: (data: iMeet) => void
 }
 
 interface iForm {
@@ -25,7 +26,7 @@ interface iForm {
   name: string
 }
 
-const MeetCardSchedule = ({ isOpen, onClose, item }: iProps) => {
+const MeetCardSchedule = ({ isOpen, onClose, onSubmit, item }: iProps) => {
   const initialValues: iForm = useMemo(() => {
     return {
       phone_number: '',
@@ -50,11 +51,12 @@ const MeetCardSchedule = ({ isOpen, onClose, item }: iProps) => {
     editTime(
       { phone_number: formValues.phone_number },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
           toast({
             title: 'Horário alterado com sucesso',
             status: 'success'
           })
+          onSubmit(data)
           onClose()
         },
         onError: () => {

@@ -25,9 +25,10 @@ import MeetCardSchedule from './MeetCardSchedule'
 
 interface iProps {
   item: iMeetsControllerResponse
+  refetch: () => void
 }
 
-const RstMeetCard = ({ item }: iProps) => {
+const RstMeetCard = ({ item, refetch }: iProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { isOpen: isOpenSchedule, onOpen: onOpenSchedule, onClose: onCloseSchedule } = useDisclosure()
 
@@ -47,6 +48,7 @@ const RstMeetCard = ({ item }: iProps) => {
   const handleCancelTime = () => {
     cancelTime(undefined, {
       onSuccess: () => {
+        refetch()
         toast({
           title: 'Horário cancelado',
           description: 'Este horário foi cancelado com sucesso',
@@ -67,9 +69,11 @@ const RstMeetCard = ({ item }: iProps) => {
   const handleIntervalTime = () => {
     patchInterval(undefined, {
       onSuccess: () => {
+        refetch()
         toast({
           title: 'Intervalo agendado',
-          description: 'Este horário foi agendado como intervalo'
+          description: 'Este horário foi agendado como intervalo',
+          status: 'success'
         })
         onClose()
       },
@@ -154,7 +158,7 @@ const RstMeetCard = ({ item }: iProps) => {
           </Menu>
         </Box>
       </GridItem>
-      <MeetCardSchedule isOpen={isOpenSchedule} onClose={onCloseSchedule} item={item} />
+      <MeetCardSchedule isOpen={isOpenSchedule} onClose={onCloseSchedule} item={item} onSubmit={refetch} />
     </Grid>
   )
 }

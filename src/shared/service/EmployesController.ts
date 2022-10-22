@@ -1,10 +1,10 @@
 import { rstApi } from './api'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { iEmploye } from 'shared/interface/public'
 
 export type iEmployesControllerResponse = iEmploye
 
-export const useQueryEmployesController = (config?: any) =>
+export const useQueryEmployesController = (config?: UseQueryOptions<iEmployesControllerResponse[], unknown>) =>
   useQuery<iEmployesControllerResponse[]>(
     ['EmployesController'],
     () =>
@@ -17,8 +17,10 @@ export const useQueryEmployesController = (config?: any) =>
 
 useQueryEmployesController.querykey = ['EmployesController']
 
+export type iEmployesControllerShowResponse = iEmploye
+
 export const useQueryEmployesControllerShow = ({ employe_id }: { employe_id: string }) =>
-  useQuery<iEmployesControllerResponse>(['EmployesController'], () =>
+  useQuery<iEmployesControllerShowResponse>(['EmployesController'], () =>
     rstApi({
       url: 'https://agendamentos2.herokuapp.com/employes/' + employe_id + '/',
       method: 'GET'
