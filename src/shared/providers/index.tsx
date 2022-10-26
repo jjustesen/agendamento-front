@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 import React from 'react'
+import AxiosInterceptor from 'shared/hook/apiInterceptor'
 import GlobalStyles from 'styles/global'
 import { AuthProvider } from './auth'
 import { MobileProvider } from './isMobile'
@@ -49,6 +50,7 @@ function Providers({ children }: React.PropsWithChildren<unknown>) {
         <ChakraProvider theme={theme}>
           <AuthProvider>
             <UserProvider>
+              <AxiosInterceptor />
               <ReactQueryDevtools initialIsOpen={false} />
               <GlobalStyles />
               {children}

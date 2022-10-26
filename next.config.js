@@ -8,7 +8,7 @@ module.exports = withPWA({
     styledComponents: true
   },
   pwa: {
-    dest: 'public'
-    // disable: !isProd
+    dest: 'public',
+    disable: true
   }
 })
